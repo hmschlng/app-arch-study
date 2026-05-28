@@ -25,7 +25,7 @@
 | [Backend Pool](./02.네트워크/backend-pool.md) | AppGW가 트래픽을 전달할 backend 대상 집합. IP/FQDN/VMSS/App Service/AKS Pod(AGIC 경유) 등이 멤버. |
 | [Rule](./02.네트워크/rule.md) | Listener와 Backend Pool을 연결하는 라우팅 규칙. Basic(단순 1:1)과 Path-based(URL path별 분기) 두 종류. |
 | [Health Probe](./02.네트워크/health-probe.md) | Backend의 생존을 주기적으로 확인하는 헬스체크. 응답 코드/본문/타임아웃 기준으로 healthy 여부를 판정해 트래픽 송신 결정. |
-| [Internal Load Balancer (ILB)](./02.네트워크/internal-load-balancer.md) | Public IP 없는 Layer 4(TCP/UDP) 부하분산기. VNet 내부에서만 접근 가능. AKS에서는 Service type=LoadBalancer + azure-load-balancer-internal: "true" annotation으로 사용. |
+| [Internal Load Balancer (ILB)](./02.네트워크/internal-load-balancer.md) | VNet 내부에서만 접근되는 Layer 4(TCP/UDP) Load Balancer입니다. HTTP AppGW와는 달리 non-Http TCP(ssh, mySQL, pgSQL, Redis 등등)나 UDP(RT(S)P 영상 프로토콜이나 MQTT 등) 통신을 전부 pass through할 수 있어서, 19000, 34000번대 포트 통신의 경우는 이 ILB를 엔트리포인트로 둘 수 있습니다. 그러나 말그대로 Internal LB이고, AppGW처럼 인터넷 외부 인입이 ILB를 직접 접근할 수 없기 때문에, 랜딩존 Hub + Spoke 규격에서 ILB 인입 흐름에 대해 확인할 필요가 있습니다. |
 | [Private Endpoint](./02.네트워크/private-endpoint.md) | PaaS 서비스(Storage, Key Vault, ACR 등)를 public internet 거치지 않고 VNet 내부 사설 IP로 접근하게 하는 NIC. DNS도 privatelink.~ 사설 영역으로 매핑. |
 | [Network Security Group (NSG)](./02.네트워크/nsg.md) | Subnet 또는 NIC 단위로 적용되는 stateful L3/L4 방화벽 규칙 집합. source/destination/port/protocol 기반 allow/deny. |
 | [User Defined Route (UDR)](./02.네트워크/udr.md) | Subnet의 기본 라우팅을 사용자가 재정의하는 routing rule. 흔히 outbound를 firewall/NVA로 강제 우회시킬 때 사용. |
